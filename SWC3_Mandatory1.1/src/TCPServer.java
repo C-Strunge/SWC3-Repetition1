@@ -102,23 +102,25 @@ public class TCPServer {
 
                             msgToSend = '\n' + msgIn;
 
-                            if (!msgIn.equals("IMAV")) {
+                            if (msgToSend.contains("QUIT")) {
+                                clients.remove(client);
+                                sendList(clients);
+                                socket.close();
+                                break;
+                            }
+                            if (msgIn.equals("QUIT") == false) {
+                                if (!msgIn.equals("IMAV")) {
 
-                                for (ClientHandler c : clients) {
-                                    sendMessage(msgToSend, c.getOutput());
-                                }
-                                String[] data = msgIn.split(" ");
+                                    for (ClientHandler c : clients) {
+                                        sendMessage(msgToSend, c.getOutput());
+                                    }
+                                    String[] data = msgIn.split(" ");
 
-                                String testString = data[2];
+                                    String testString = data[2];
 
-                                if (testString.length() > 250) {
-                                    sendMessage("J_ER 00069: Message too long, try again!", client.getOutput());
-                                }
-                                if (msgToSend.contains("QUIT")) {
-                                    clients.remove(client);
-                                    sendList(clients);
-                                    socket.close();
-                                    w = false;
+                                    if (testString.length() > 250) {
+                                        sendMessage("J_ER 00069: Message too long, try again!", client.getOutput());
+                                    }
                                 }
                             }
                         }
