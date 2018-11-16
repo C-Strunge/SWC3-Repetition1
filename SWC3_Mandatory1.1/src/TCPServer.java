@@ -37,7 +37,7 @@ public class TCPServer {
 
                         InputStream input = socket.getInputStream();
                         OutputStream output = socket.getOutputStream();
-                        output = socket.getOutputStream();
+
                         ClientHandler client = new ClientHandler();
                         do {
 
